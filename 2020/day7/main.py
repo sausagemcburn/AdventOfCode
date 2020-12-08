@@ -37,6 +37,17 @@ def doesItHold(bd, b, t):
 		return 0
 
 
+def howManyBagsInside(bd, t):
+	# recursively check bags for number of bags inside
+	n = 1
+	if bd[t].keys() != []:
+		for b in bd[t].keys():
+			n += (bd[t][b] * howManyBagsInside(bd, b))
+		
+	return n
+
+
+
 if __name__ == "__main__":
 	# default cmd line input vars
 	test_input = 'test-input.txt'
@@ -91,10 +102,16 @@ if __name__ == "__main__":
 	# now find how many of these bags can hold a shiny gold
 	target = 'shiny gold'
 	n = 0
-	for bag in bag_dir.keys():
-		n += doesItHold(bag_dir, bag, target)
+	if part == 1:
+		for bag in bag_dir.keys():
+			n += doesItHold(bag_dir, bag, target)
 
-	print 'bags that can hold shiny gold: ', n
+		print 'bags that can hold shiny gold: ', n
+
+	else:
+		n = howManyBagsInside(bag_dir, target)
+
+		print 'total number of bags: ', n-1
 
 
 	exit()
